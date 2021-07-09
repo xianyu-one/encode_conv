@@ -7,7 +7,7 @@ import os,chardet
 _check = ''   #用于比较用户输入是否为空
 _check2 = 'None' 
 
-def dicide_path(path):    #用于检测输入路径是否带有/
+def decide_path(path):    #用于检测输入路径是否带有/
     path_back = ''
     if path.endswith('/'):
         path_back = path
@@ -16,7 +16,7 @@ def dicide_path(path):    #用于检测输入路径是否带有/
         path_back = path + '/'
         return path_back
 
-def dicide_extension(extension):   #用于检测输入文件后缀是否带有.
+def decide_extension(extension):   #用于检测输入文件后缀是否带有.
     extension_back = ''
     if extension.startswith('.'):
         extension_back = extension
@@ -46,7 +46,7 @@ def de_en(path,conv_original,conv):   #编码转换
     flie_data = flie_data_orig.encode(conv)
     write_file(path,flie_data)
 
-def check_conv(txt):   #检测是否需要转换为特定格式
+def check_conv(conv):   #检测是否需要转换为特定格式
     if conv == _check:    
         conv_back = 'UTF-8'
         return(conv_back)
@@ -55,11 +55,11 @@ def check_conv(txt):   #检测是否需要转换为特定格式
         return(conv_back)
 
 def check_path_extension(path_original,extension_original):   #检测用户输入文件夹路径以及文件后缀
-    path = dicide_path(path_original)
+    path = decide_path(path_original)
     if extension_original == _check:
         extension = extension_original
     else:
-        extension = dicide_extension(extension_original)
+        extension = decide_extension(extension_original)
     back = {'path':path, 'extension':extension}
     return(back)
 

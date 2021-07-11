@@ -2,7 +2,7 @@
 #coding:utf-8
 #version:3.8.5
 
-import os,chardet,check_all,decode_encode,decide_
+import os,chardet,check_all,decode_encode,decide_,findallfile
 
 _check = ''
 _check2 = 'None' 
@@ -17,32 +17,29 @@ def encode_conv_body(path_original,extension_original,conv_original,conv):
     print('转换为' + conv + '编码')
     print('格式化输入完成！')
 
-    flielist = os.listdir(path)
     if extension == _check:
-        for item in flielist:
-            tar = path + item
+        for item in findallfile.findAllFile(path):
             if conv_original == _check:
-                conv_check_back = str(check_all.check_encode(tar))
+                conv_check_back = str(check_all.check_encode(item))
                 if conv_check_back == _check2:
-                    print('文件 ' + tar + ' 编码未能成功识别')
+                    print('文件 ' + item + ' 编码未能成功识别')
                 else:
-                    decode_encode.de_en(tar,conv_check_back,conv)
+                    decode_encode.de_en(item,conv_check_back,conv)
             else:
                 conv_check_back = conv_original
-                decode_encode.de_en(tar,conv_check_back,conv)      
+                decode_encode.de_en(item,conv_check_back,conv)      
     else:
-        for item in flielist:
+        for item in findallfile.findAllFile(path):
             if item.endswith(extension):
-                tar = path + item
                 if conv_original == _check:
-                    conv_check_back = str(check_all.check_encode(tar))
+                    conv_check_back = str(check_all.check_encode(item))
                     if conv_check_back == _check2:
-                        print('文件 ' + tar + ' 编码未能成功识别')
+                        print('文件 ' + item + ' 编码未能成功识别')
                     else:
-                        decode_encode.de_en(tar,conv_check_back,conv)
+                        decode_encode.de_en(item,conv_check_back,conv)
                 else:
                     conv_check_back = conv_original
-                    decode_encode.de_en(tar,conv_check_back,conv)
+                    decode_encode.de_en(item,conv_check_back,conv)
 
 path_original = input('请输入需要转换的文件夹路径：')
 print('如果不需要指定文件后缀请直接回车')

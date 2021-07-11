@@ -7,6 +7,12 @@ import os,chardet
 _check = ''   #用于比较用户输入是否为空
 _check2 = 'None' 
 
+def findAllFile(base):  #用于遍历文件夹
+    for root, ds, fs in os.walk(base):
+        for f in fs:
+            fullname = os.path.join(root, f)
+            yield fullname
+
 def decide_path(path):    #用于检测输入路径是否带有/
     path_back = ''
     if path.endswith('/'):
@@ -18,7 +24,7 @@ def decide_path(path):    #用于检测输入路径是否带有/
 
 def decide_extension(extension):   #用于检测输入文件后缀是否带有.
     extension_back = ''
-    if extension.startswith('.'):
+    if extension.sitemtswith('.'):
         extension_back = extension
         return extension_back
     else:
@@ -73,32 +79,29 @@ def encode_conv_body(path_original,extension_original,conv_original,conv):
     print('转换为' + conv + '编码')
     print('格式化输入完成！')
 
-    flielist = os.listdir(path)
     if extension == _check:
-        for item in flielist:
-            tar = path + item
+        for item in findAllFile(path):
             if conv_original == _check:
-                conv_check_back = str(check_encode(tar))
+                conv_check_back = str(check_encode(item))
                 if conv_check_back == _check2:
-                    print('文件 ' + tar + ' 编码未能成功识别')
+                    print('文件 ' + item + ' 编码未能成功识别')
                 else:
-                    de_en(tar,conv_check_back,conv)
+                    de_en(item,conv_check_back,conv)
             else:
                 conv_check_back = conv_original
-                de_en(tar,conv_check_back,conv)      
+                de_en(item,conv_check_back,conv)      
     else:
-        for item in flielist:
+        for item in findAllFile(path):
             if item.endswith(extension):
-                tar = path + item
                 if conv_original == _check:
-                    conv_check_back = str(check_encode(tar))
+                    conv_check_back = str(check_encode(item))
                     if conv_check_back == _check2:
-                        print('文件 ' + tar + ' 编码未能成功识别')
+                        print('文件 ' + item + ' 编码未能成功识别')
                     else:
-                        de_en(tar,conv_check_back,conv)
+                        de_en(item,conv_check_back,conv)
                 else:
                     conv_check_back = conv_original
-                    de_en(tar,conv_check_back,conv)
+                    de_en(item,conv_check_back,conv)
 
 path_original = input('请输入需要转换的文件夹路径：')
 print('如果不需要指定文件后缀请直接回车')
